@@ -1,29 +1,3 @@
--- Mason
-require("mason").setup({
-  ui = {
-    icons = {
-      package_installed = "",
-      package_pending = "",
-      package_uninstalled = "",
-    },
-  }
-})
-require("mason-lspconfig").setup()
-
--- Rust-Analyzer
-local rt = require("rust-tools")
-
-rt.setup({
-  server = {
-    on_attach = function(_, bufnr)
-      -- Hover actions
-      vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
-      -- Code action groups
-      vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
-    end,
-  },
-})
-
 -- LSP
 local sign = function(opts)
   vim.fn.sign_define(opts.name, {
@@ -156,41 +130,4 @@ vim.api.nvim_create_autocmd("CursorHold", {
 vim.keymap.set("n", "g[", vim.diagnostic.goto_prev, keymap_opts)
 vim.keymap.set("n", "g]", vim.diagnostic.goto_next, keymap_opts)
 
--- tree-sitter
-require('nvim-treesitter.configs').setup {
-  ensure_installed = { "lua", "rust", "toml", "typst" },
-  auto_install = true,
-  highlight = {
-    enable = true,
-    additional_vim_regex_highlighting=false,
-  },
-  ident = { enable = true }, 
-  rainbow = {
-    enable = true,
-    extended_mode = true,
-    max_file_lines = nil,
-  }
-}
--- tree-sitter folding
--- vim.wo.foldmethod = 'expr'
--- vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'
 
--- vimspector
-vim.cmd([[
-let g:vimspector_sidebar_width = 85
-let g:vimspector_bottombar_height = 15
-let g:vimspector_terminal_maxwidth = 70
-]])
-
-vim.cmd([[
-  nmap <F9> <cmd>call vimspector#Launch()<cr>
-  nmap <F5> <cmd>call vimspector#StepOver()<cr>
-  nmap <F8> <cmd>call vimspector#Reset()<cr>
-  nmap <F11> <cmd>call vimspector#StepOver()<cr>")
-  nmap <F12> <cmd>call vimspector#StepOut()<cr>")
-  nmap <F10> <cmd>call vimspector#StepInto()<cr>")
-]])
-
--- map('n', "Db", ":call vimspector#ToggleBreakpoint()<cr>")
--- map('n', "Dw", ":call vimspector#AddWatch()<cr>")
--- map('n', "De", ":call vimspector#Evaluate()<cr>")
