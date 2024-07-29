@@ -1,6 +1,6 @@
 # nvim.files
 
-Repo with my NeoVim config files and custom scripts
+Repo with my NeoVim config files
 
 ## TODO:
 - [ ] Create repo

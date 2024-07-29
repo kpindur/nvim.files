@@ -158,7 +158,7 @@ vim.keymap.set("n", "g]", vim.diagnostic.goto_next, keymap_opts)
 
 -- tree-sitter
 require('nvim-treesitter.configs').setup {
-  ensure_installed = { "lua", "rust", "toml" },
+  ensure_installed = { "lua", "rust", "toml", "typst" },
   auto_install = true,
   highlight = {
     enable = true,

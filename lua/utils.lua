@@ -1,3 +1,6 @@
+-- clipboard
+vim.api.nvim_set_option("clipboard", "unnamedplus")
+
 -- telescope related setup
 local telescope = require "telescope"
 

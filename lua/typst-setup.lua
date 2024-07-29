@@ -1,3 +1,13 @@
+require'lspconfig'.typst_lsp.setup{
+  on_attach = on_attach,
+  --root_dir = function(fname) return utils.path.dirname(fname) end,
+  filetypes = {"typst", "typ"},
+  settings = {
+    exportPdf = "never",
+    experimentalFormatterMode = "on"
+  },
+}
+
 -- Global vars --
 local is_preview_open = false
 local preview = ".preview.pdf"
@@ -70,18 +80,18 @@ vim.cmd[[command! TypstPreviewToggle lua toggle_preview()]]
 
 -- Autocommands --
 vim.api.nvim_create_autocmd("TextChangedI", {
-	pattern = {"*.typst"},
+	pattern = {"*.typst", "*.typ"},
 	callback = function()
 		if render_timer then
 			vim.loop.timer_stop(render_timer)
 		end
 
 		render_timer = vim.loop.new_timer()
-		render_timer:start(500, 0, vim.schedule_wrap(render_typst_to_pdf))
+		render_timer:start(750, 0, vim.schedule_wrap(render_typst_to_pdf))
 	end
 })
 
 vim.api.nvim_create_autocmd("BufWritePost", {
-	pattern = {"*.typst"},
+	pattern = {"*.typst", "*.typ"},
 	callback = render_typst_to_pdf
 })

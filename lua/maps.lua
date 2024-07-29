@@ -17,6 +17,8 @@ keymap("n", "<A-h>", ":bnext<CR>", opts)
 --keymap("n", "<Leader>l", ":vsplit term://fish <CR>", {silent = true})
 --keymap("t", "<Leader><Esc>", "<C-\\><C-n>", {silent = true})
 
+-- Python interpreter
+vim.g.python3_host_prog = vim.fn.expand("~/.pyenv/versions/3.12.4")
 
 -- Other options
 

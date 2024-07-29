@@ -57,7 +57,7 @@ require('packer').startup(function(use)
 	use {"folke/todo-comments.nvim", requires = { "nvim-lua/plenary.nvim" }}
 	
 	-- tabs
-	use {'romgrk/barbar.nvim', requires = {'nvim-tree/nvim-web-devicons', 'lewis6991/gitsigns.nvim'}}
+	-- use {'romgrk/barbar.nvim', requires = {'nvim-tree/nvim-web-devicons', 'lewis6991/gitsigns.nvim'}}
 
 	-- Mind Maps using Markdown
 	use {
@@ -77,4 +77,18 @@ require('packer').startup(function(use)
 
 	-- nvim-tree (NERDTree alternative)
 	use {'nvim-tree/nvim-tree.lua', requires = {'nvim-tree/nvim-web-devicons'}}
+
+  -- typst integration
+  use {'kaarmu/typst.vim', ft ={'typst'}}
+
+  -- image.nvim (ueberzug alternative)
+  use { '3rd/image.nvim' }
+
+  -- Jupyter integration
+  use { 'benlubas/molten-nvim', 
+        run =':UpdateRemotePlugins', 
+        requires='3rd/image.nvim', 
+        init = function()
+            vim.g.molten_image_provider = "image.nvim"
+        end, }
 end)
