@@ -18,7 +18,12 @@ keymap("n", "<A-h>", ":bnext<CR>", opts)
 --keymap("t", "<Leader><Esc>", "<C-\\><C-n>", {silent = true})
 
 -- Python interpreter
-vim.g.python3_host_prog = vim.fn.expand("~/.pyenv/versions/3.12.4/bin/python")
+local python_provider = vim.fn.expand("$NVIM_PYTHON_PROVIDER")
+if python_provider ~= nil then
+  vim.g.python3_host_prog = python_provider .. "/bin/python"
+else
+  print("NVIM_PYTHON_PROVIDER is not set. Please set it in your environment!")
+end
 
 -- Other options
 
