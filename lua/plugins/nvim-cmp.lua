@@ -32,79 +32,52 @@ local function config()
     enabled = function()
       return not in_comment() and not disallowed_buftype()
     end,
-    mapping = {
-      ["<C-n>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i", "c" }),
-      ["<C-p>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "c" }),
-      ["<PgUp>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
-      ["<PgDn>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
-      ["<C-Space>"] = cmp.mapping(cmp.mapping.complete({}), { "i", "c" }),
-      ["<C-e>"] = cmp.mapping({
-        i = cmp.mapping.abort(),
-        c = cmp.mapping.close(),
-      }),
-      ["<Tab>"] = cmp.mapping.confirm({ select = true }),
-    },
     snippet = {
       expand = function(args)
-        vim.snippet.expand(args.body)
+          vim.fn["vsnip#anonymous"](args.body)
       end,
     },
-    sources = {
-      {
-        name = "nvim_lsp",
-        group_index = 0,
-      },
-      {
-        name = "nvim_lua",
-        group_index = 0,
-      },
-      {
-        name = "vim-dadbod-completion",
-        group_index = 0,
-      },
-      {
-        name = "lazydev",
-        group_index = 0,
-      },
-      {
-        name = "spell",
-        option = {
-          enable_in_context = in_spell,
-        },
-        group_index = 3,
-      },
-      {
-        name = "treesitter",
-        keyword_length = 3,
-        group_index = 4,
-      },
-      {
-        name = "async_path",
-        group_index = 4,
-      },
-      {
-        name = "calc",
-        group_index = 4,
-      },
-      {
-        name = "buffer",
-        keyword_length = 3,
-        group_index = 5,
-      },
+    mapping = {
+      ['<C-p>'] = cmp.mapping.select_prev_item(),
+      ['<C-n>'] = cmp.mapping.select_next_item(),
+      -- Add tab support
+      ['<S-Tab>'] = cmp.mapping.select_prev_item(),
+      ['<Tab>'] = cmp.mapping.select_next_item(),
+      ['<C-S-f>'] = cmp.mapping.scroll_docs(-4),
+      ['<C-f>'] = cmp.mapping.scroll_docs(4),
+      ['<C-Space>'] = cmp.mapping.complete(),
+      ['<C-e>'] = cmp.mapping.close(),
+      ['<CR>'] = cmp.mapping.confirm({
+        behavior = cmp.ConfirmBehavior.Insert,
+        select = true,
+      })
     },
-    sorting = {
-      priority_weight = 2,
-      comparators = {
-        cmp.config.compare.offset,
-        cmp.config.compare.exact,
-        cmp.config.compare.score,
-        cmp.config.compare.recently_used,
-        cmp.config.compare.locality,
-        cmp.config.compare.kind,
-        cmp.config.compare.sort_text,
-        cmp.config.compare.length,
-        cmp.config.compare.order,
-      },
+    -- Installed sources:
+    sources = {
+      { name = 'path' },                              -- file paths
+      { name = 'nvim_lsp', keyword_length = 3 },      -- from language server
+      { name = 'nvim_lsp_signature_help'},            -- display function signatures with current parameter emphasized
+      { name = 'nvim_lua', keyword_length = 2},       -- complete neovim's Lua runtime API such vim.lsp.*
+      { name = 'buffer', keyword_length = 2 },        -- source current buffer
+      { name = 'vsnip', keyword_length = 2 },         -- nvim-cmp source for vim-vsnip 
+      { name = 'calc'},                               -- source for math calculation
+    },
+    window = {
+        completion = cmp.config.window.bordered(),
+        documentation = cmp.config.window.bordered(),
+    },
+    formatting = {
+        fields = {'menu', 'abbr', 'kind'},
+        format = function(entry, item)
+            local menu_icon ={
+                nvim_lsp = 'λ',
+                vsnip = '⋗',
+                buffer = 'Ω',
+                path = '🖫',
+            }
+            item.menu = menu_icon[entry.source.name]
+            return item
+        end,
     },
   })
 

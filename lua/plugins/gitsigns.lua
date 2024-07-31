@@ -8,7 +8,7 @@ return {
       topdelete = { text = "-" },
       changedelete = { text = "~" },
     },
-    --on_attach = require("config.keymaps").gitsigns,
+    on_attach = require("config.keymaps").gitsigns,
   },
   event = { "BufReadPost", "BufNewFile" },
 }

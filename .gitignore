@@ -1,3 +1,3 @@
 plugin
-backup
+backup/*
 lua/_old

@@ -1,6 +1,6 @@
 local function config()
   local cmp_nvim_lsp = require("cmp_nvim_lsp")
-  -- local keymaps = require("config.keymaps")
+  local keymaps = require("config.keymaps")
   local lsp_status = require("lsp-status")
   local lspconfig = require("lspconfig")
   local mason_lspconfig = require("mason-lspconfig")
@@ -14,7 +14,7 @@ local function config()
     callback = function(args)
       local bufnr = args.buf
       local client = vim.lsp.get_client_by_id(args.data.client_id)
-      -- keymaps.buf_lsp(client, bufnr)
+      keymaps.lsp_buf(client, bufnr)
       lsp_status.on_attach(client)
     end,
   })
@@ -53,9 +53,6 @@ local function config()
     dap = {},
   }
 
-  -- The Gleam LSP is integrated into the gleam cli and isn't installed via mason.
-  lspconfig.gleam.setup({})
-
   -- Dynamic server setup, so we don't have to explicitly list every single server
   -- and can just list the ones we want to override configuration for.
   -- See :help mason-lspconfig-dynamic-server-setup
@@ -70,44 +67,6 @@ local function config()
     ["clangd"] = function()
       lspconfig.clangd.setup({
         filetypes = { "c", "cpp" }, -- we don't want objective-c and objective-cpp!
-      })
-    end,
-    ["lexical"] = function()
-      lspconfig.lexical.setup({
-        filetypes = { "elixir", "eelixir", "heex" },
-        cmd = {
-          vim.fn.expand(
-            -- Doesn't support latest!
-            -- "~/.local/share/nvim/mason/packages/lexical/libexec/lexical/bin/start_lexical.sh"
-            "~/src/lexical/_build/dev/package/lexical/bin/start_lexical.sh"
-          ),
-        },
-        settings = {},
-      })
-    end,
-    ["tsserver"] = function()
-      require("typescript-tools").setup({
-        capabilities = capabilities,
-        settings = {
-          expose_as_code_action = "all",
-          tsserver_file_preferences = {
-            includeCompletionsForModuleExports = true,
-            includeCompletionsForImportStatements = true,
-            includeCompletionsWithObjectLiteralMethodSnippets = true,
-
-            includeInlayParameterNameHints = "all",
-            includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-            includeInlayFunctionParameterTypeHints = true,
-            includeInlayVariableTypeHints = true,
-            includeInlayPropertyDeclarationTypeHints = true,
-            includeInlayVariableTypeHintsWhenTypeMatchesName = true,
-            includeInlayFunctionLikeReturnTypeHints = true,
-            includeInlayEnumMemberValueHints = true,
-
-            importModuleSpecifierPreference = "non-relative",
-            quotePreference = "auto",
-          },
-        },
       })
     end,
   })
@@ -131,7 +90,7 @@ return {
     },
 
     -- Should consider...
-    -- "windwp/nvim-autopairs",
+    "windwp/nvim-autopairs",
     -- "kevinhwang91/nvim-ufo",
     -- "VidocqH/lsp-lens.nvim",
     -- "jubnzv/virtual-types.nvim",

@@ -3,6 +3,12 @@
 
 vim.g.python3_host_prog = vim.fn.expand("$NVIM_PYTHON_PROVIDER") .. "/bin/python"
 
+-- Update package.path to include luarocks
+package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.1/?.lua"
+package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.1/?/init.lua"
+-- Update package.cpath to include luarocks
+package.cpath = package.cpath .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/lib/lua/5.1/?.so"
+
 local opt = vim.o
 
 opt.shell = "/bin/bash"
@@ -32,12 +38,16 @@ opt.report = 0
 opt.ruler = true
 opt.showcmd = true
 opt.signcolumn = "yes"
-opt.completeopt = "menu,menuone,noselect"
+vim.opt.completeopt = {
+  'menuone',        --- popup even when there's only one match
+  'noselect',       --- do not select, force to select
+  'noinsert'        --- do not insert text until a selection is made
+}
 opt.conceallevel = 2
 opt.laststatus = 2
 -- Spelling
 opt.spell = true
-opt.spelllang = "en_US"
+opt.spelllang = "en"
 -- Other
 opt.ignorecase = true
 opt.lazyredraw = true
