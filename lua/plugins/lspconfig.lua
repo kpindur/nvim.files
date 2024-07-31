@@ -44,7 +44,7 @@ local function config()
             disabled = { "unresolved-proc-macro" },
           },
           checkOnSave = {
-            extraArgs = { "--target-dir", "/tmp/rust-analyzer-check" },
+            extraArgs = { "--target-dir", "/tmp/rust-analyzer-check", "--", "-A", "clippy::needless_return" },
             command = "clippy",
           },
         },
@@ -52,6 +52,20 @@ local function config()
     },
     dap = {},
   }
+  
+  lspconfig.pyright.setup({
+    settings = {
+          python = {
+              analysis = {
+                  autoImportCompletions = true,
+              },
+	      plugins = {
+          pylint = { enabled = true, executable = "pylint" },
+          mypy = { enabled = true },
+	      },
+          }
+      }
+  })
 
   -- Dynamic server setup, so we don't have to explicitly list every single server
   -- and can just list the ones we want to override configuration for.

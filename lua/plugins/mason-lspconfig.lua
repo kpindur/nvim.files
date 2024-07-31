@@ -1,12 +1,14 @@
 local opts = {
   ensure_installed = {
-    -- Nvim related
+    -- Lua
     "lua_ls",
     -- Rust
     "rust_analyzer",
-    -- Other programming
+    -- C & C++
     "clangd",
-    "pylsp",
+    -- Python
+    "pyright",
+    -- Zig
     "zls",
   },
   automatic_installation = true,

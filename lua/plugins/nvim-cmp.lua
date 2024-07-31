@@ -105,6 +105,8 @@ return {
     "hrsh7th/cmp-nvim-lsp",
     "hrsh7th/cmp-nvim-lua",
     "hrsh7th/cmp-cmdline",
+    "hrsh7th/vim-vsnip",
+    "hrsh7th/cmp-vsnip",
     "onsails/lspkind.nvim",
     "nvim-treesitter/nvim-treesitter",
     -- "ray-x/cmp-treesitter",

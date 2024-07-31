@@ -19,7 +19,7 @@ Maps.init = function()
   -- map('t', '<Esc>', "<C-\\><C-n>")
 
   map('n', '<leader>d', ':Neotree toggle=true<CR>', { desc = "Neotree" })
-  map('n', '<leader>t', ':Trouble cascade toggle<CR>', { desc = "Diagnostics" })
+  map('n', '<leader>t', ':Trouble diagnostics toggle<CR>', { desc = "Diagnostics" })
 
   map('n', '<leader>es', ':e ~/workspaces/other/org/scratch.dat<CR>', { desc = "Scratch" })
   map('n', '<leader>ej', ':e ~/workspaces/other/org/journal.dat<CR>', { desc = "Journal" })
