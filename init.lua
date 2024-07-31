@@ -1,21 +1,35 @@
--- Plugin files (possibly distribute it to corresponding files?)
-require 'plugins'
+vim.g.mapleader = ','
+-- Bootstrap lazy.nvim
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+  if vim.v.shell_error ~= 0 then
+    vim.api.nvim_echo({
+      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+      { out, "WarningMsg" },
+      { "\nPress any key to exit..." },
+    }, true, {})
+    vim.fn.getchar()
+    os.exit(1)
+  end
+end
+vim.opt.rtp:prepend(lazypath)
 
--- Various Maps
-require 'core'
+require("lazy").setup({
+  spec = {
+    { import = 'plugins' },
+  },
+  defaults = {
+    lazy = false,
+    version = false,
+  },
+  install = { colorscheme = { "melange" } },
+  checker = {
+    enabled = true,
+    notify = false,
+  },
+  performance = {},
+})
 
--- Other
-require 'cfg_telescope'
-require 'cfg_nvim_tree'
-
--- LSP
-require 'cfg_mason'
-require 'cfg_rust_tools'
-require 'cfg_lsp'
-require 'cfg_lsp_python'
-require 'cfg_lsp_zig'
-require 'cfg_lsp_typst'
-require 'cfg_tree_sitter'
-require 'cfg_vimspector'
-require 'cfg_molten'
-require 'cfg_todo'
+require('config')
