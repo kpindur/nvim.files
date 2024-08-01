@@ -49,12 +49,12 @@ end
 Maps.neotest = function(buffer)
   local neotest = require('neotest')
 
-  map('n', '<leader>x', function() neotest.run.run() end, { buffer = buffer, desc = "Neotest run test at cursor" })
-  map('n', '<leader>X', function() neotest.run.run(vim.fn.expand("%")) end, { buffer = buffer, desc = "Neotest run test in a file" })
-  map('n', '<leader>m', function() neotest.run.run(vim.loop.cwd()) end, { buffer = buffer, desc = "Neotest run tests in workspace" })
+  map('n', '<leader>nr', function() neotest.run.run() end, { buffer = buffer, desc = "[n]eotest [r]un test at cursor" })
+  map('n', '<leader>nR', function() neotest.run.run(vim.fn.expand("%")) end, { buffer = buffer, desc = "[n]eotest [R]un tests in a file" })
+  map('n', '<leader>NR', function() neotest.run.run(vim.loop.cwd()) end, { buffer = buffer, desc = "[N]eotest [R]un tests in workspace" })
 
-  map('n', '<leader>n', function() neotest.output_panel.toggle() end, { buffer = buffer, desc = "Neotest toggle panel tab" })
-  map('n', '<leader>N', function() neotest.summary.toggle() end, { buffer = buffer, desc = "Neotest toggle summary tab" })
+  map('n', '<leader>no', function() neotest.output_panel.toggle() end, { buffer = buffer, desc = "[n]eotest toggle [o]utput panel" })
+  map('n', '<leader>ns', function() neotest.summary.toggle() end, { buffer = buffer, desc = "[n]eotest toggle [s]ummary panel" })
 end
 
 Maps.lsp_buf = function(_, buffer)
