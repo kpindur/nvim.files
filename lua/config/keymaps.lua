@@ -60,15 +60,15 @@ end
 Maps.lsp_buf = function(_, buffer)
   local lsp_buf = vim.lsp.buf
 
-  map('n', '<localleader>gd', lsp_buf.declaration, { silent = true, buffer = buffer, desc = "Declaration" })
-  map('n', '<localleader>gD', lsp_buf.definition, { silent = true, buffer = buffer, desc = "Definition" })
-  map('n', '<localleader>gr', lsp_buf.references, { silent = true, buffer = buffer, desc = "References" })
-  map('n', '<localleader>gi', lsp_buf.implementation, {silent = true, buffer = buffer, desc = "Implementation" })
-  map('n', '<localleader>gt', lsp_buf.type_definition, {silent = true, buffer = buffer, desc = "Type definition" })
-  map('n', '<localleader>gh', lsp_buf.hover, { silent = true, buffer = buffer, desc = "Hover" })
-  map('n', '<localleader>gs', lsp_buf.signature_help, { silent = true, buffer = buffer, desc = "Signature help" })
-  map('n', '<localleader>gx', lsp_buf.code_action, { silent = true, buffer = buffer, desc = "Code action" })
-  map('n', '<localleader>gR', lsp_buf.rename, { silent = true, buffer = buffer, desc = "Rename" })
+  map('n', '<localleader>gd', lsp_buf.declaration, { silent = true, buffer = buffer, desc = "[g]o to [d]eclaration" })
+  map('n', '<localleader>gD', lsp_buf.definition, { silent = true, buffer = buffer, desc = "[g]o to [D]efinition" })
+  map('n', '<localleader>gr', lsp_buf.references, { silent = true, buffer = buffer, desc = "[g]o to [r]eference" })
+  map('n', '<localleader>gR', lsp_buf.rename, { silent = true, buffer = buffer, desc = "[g]o to [R]ename window" })
+  map('n', '<localleader>gi', lsp_buf.implementation, {silent = true, buffer = buffer, desc = "[g]o to [i]mplementation" })
+  map('n', '<localleader>gt', lsp_buf.type_definition, {silent = true, buffer = buffer, desc = "[g]o to [t]ype definition" })
+  map('n', '<localleader>gh', lsp_buf.hover, { silent = true, buffer = buffer, desc = "[g]o to [h]over" })
+  map('n', '<localleader>gs', lsp_buf.signature_help, { silent = true, buffer = buffer, desc = "[g]o to [s]ignature help" })
+  map('n', '<localleader>gc', lsp_buf.code_action, { silent = true, buffer = buffer, desc = "[g]o to [c]ode action" })
 end
 
 Maps.gitsigns = function(buffer)
