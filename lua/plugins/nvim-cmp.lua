@@ -2,36 +2,8 @@ local function config()
   local cmp = require("cmp")
   local context = require("cmp.config.context")
 
-  local function in_comment()
-    return context.in_treesitter_capture("comment") or context.in_syntax_group("Comment")
-  end
-
-  local function in_string()
-    return context.in_treesitter_capture("string") or context.in_syntax_group("String")
-  end
-
-  local function in_spell()
-    return context.in_treesitter_capture("spell")
-  end
-
-  local function disallowed_buftype()
-    local buftype = vim.bo.buftype
-    local disallowed = {
-      "prompt",
-      "nofile",
-    }
-    for _, v in pairs(disallowed) do
-      if buftype == v then
-        return true
-      end
-    end
-    return false
-  end
-
   cmp.setup({
-    enabled = function()
-      return not in_comment() and not disallowed_buftype()
-    end,
+    enabled = true,
     snippet = {
       expand = function(args)
           vim.fn["vsnip#anonymous"](args.body)
