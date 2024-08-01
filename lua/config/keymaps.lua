@@ -35,9 +35,6 @@ Maps.init = function()
   map('n', '<leader>fh', function() telescope.help_tags() end, { silent = true, desc = "Help tags" })
   map('n', '<leader>fo', function() telescope.oldfiles() end, { silent = true, desc = "Old files" })
 
-  -- map('n', '<leader>rW', '<cmd>SearchReplaceSingleBufferCWORD<CR>', { desc = "Replace CWORD" })
-  -- map('v', '<leader>rS', '<cmd>SearchReplaceSingleBufferCExpr<CR>', { desc = "Replace selection" })
-
   map('n', ']t', function() trouble.next({ skip_groups = true, jump = true }) end, { silent = true, desc = "Next trouble" })
   map('n', '[t', function() trouble.prev({ skip_groups = true, jump = true }) end, { silent = true, desc = "Previous trouble" })
   map('n', ']T', function() trouble.last({ skip_groups = true, jump = true }) end, { silent = true, desc = "Last trouble" })
@@ -82,6 +79,18 @@ Maps.gitsigns = function(buffer)
   map('v', '<leader>hs', function() gitsigns.stage_hunk({ vim.fn.line('.'), vim.fn.line('v') }) end, { silent = true, buffer = buffer, desc = "[h]unk [s]tage selection" })
   map('v', '<leader>hr', function() gitsigns.reset_hunk({ vim.fn.line('.'), vim.fn.line('v') }) end, { silent = true, buffer = buffer, desc = "[h]unk [r]eset selection" })
   map('v', '<leader>hb', function() gitsigns.blame_line({ full = true }) end, { silent = true, buffer = buffer, desc = "[h]unk [b]lame selection" })
+end
+
+Maps.molten = function()
+  map('n', '<localleader>mi', ':MoltenInit<CR>', { silent = true, desc = "[m]olten [i]nit" })
+
+  map('n', '<localleader>ms', ':noautocmd MoltenEnterOutput<CR>', { silent = true, desc = "[m]olten [s]how output" })
+  map('n', '<localleader>mh', ':MoltenHideOutput<CR>', { silent = true, desc = "[m]olten [h]ide output" })
+
+  map('n', '<localleader>me', ':MoltenEvaluateLine<CR>', { silent = true, desc = "[m]olten [e]valuate line" })
+  map('v', '<localleader>me', ':<C-u>MoltenEvaluateVisual<CR>gv', { silent = true, desc = "[m]olten [e]valuate selection" })
+
+  map('n', '<localleader>mo', ':MoltenOpenInBrowser<CR>', { silent = true, desc = "[m]olten [o]pen in browser"})
 end
 end
 
