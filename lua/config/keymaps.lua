@@ -92,6 +92,16 @@ Maps.molten = function()
 
   map('n', '<localleader>mo', ':MoltenOpenInBrowser<CR>', { silent = true, desc = "[m]olten [o]pen in browser"})
 end
+
+Maps.quarto = function()
+  local quarto = require('quarto.runner')
+
+  map('n', '<localleader>rc', quarto.run_cell, { silent = true, desc = "[r]un [c]ell" })
+  map('n', '<localleader>ra', quarto.run_above, { silent = true, desc = "[r]un cell and [a]bove" })
+  map('n', '<localleader>rA', quarto.run_all, { silent = true, desc = "[r]un [A]ll cells" })
+  map('n', '<localleader>rl', quarto.run_line, { silent = true, desc = "[r]un [l]ine" })
+  map('v', '<localleader>r', quarto.run_range, { silent = true, desc = "[r]un visual [r]ange" })
+  map('n', '<localleader>RA', function() quarto.run_all(true) end, { silent = true, desc = "[R]un [A]ll cells" })
 end
 
 return Maps
