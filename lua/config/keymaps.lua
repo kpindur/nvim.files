@@ -74,14 +74,15 @@ end
 Maps.gitsigns = function(buffer)
   local gitsigns = package.loaded.gitsigns
 
-  map('n', ']h', gitsigns.next_hunk, { silent = true, buffer = buffer, desc = "Next hunk" })
-  map('n', '[h', gitsigns.prev_hunk, { silent = true, buffer = buffer, desc = "Previous hunk" })
-  map('n', '<leader>hs', gitsigns.stage_hunk, { silent = true, buffer = buffer, desc = "Stage hunk" })
-  map('n', '<leader>hr', gitsigns.reset_hunk, { silent = true, buffer = buffer, desc = "Reset hunk" })
+  map('n', 'nh', gitsigns.next_hunk, { silent = true, buffer = buffer, desc = "[n]ext [h]unk" })
+  map('n', 'ph', gitsigns.prev_hunk, { silent = true, buffer = buffer, desc = "[p]revious [h]unk" })
+  map('n', '<leader>hs', gitsigns.stage_hunk, { silent = true, buffer = buffer, desc = "[h]unk [s]tage" })
+  map('n', '<leader>hr', gitsigns.reset_hunk, { silent = true, buffer = buffer, desc = "[r]eset [h]unk" })
 
-  map('v', '<leader>hs', function() gitsigns.stage_hunk({ vim.fn.line('.'), vim.fn.line('v') }) end, { silent = true, buffer = buffer, desc = "Stage hunk" })
-  map('v', '<leader>hr', function() gitsigns.reset_hunk({ vim.fn.line('.'), vim.fn.line('v') }) end, { silent = true, buffer = buffer, desc = "Reset hunk" })
-  map('v', '<leader>hb', function() gitsigns.blame_line({ full = true }) end, { silent = true, buffer = buffer, desc = "Blame hunk" })
+  map('v', '<leader>hs', function() gitsigns.stage_hunk({ vim.fn.line('.'), vim.fn.line('v') }) end, { silent = true, buffer = buffer, desc = "[h]unk [s]tage selection" })
+  map('v', '<leader>hr', function() gitsigns.reset_hunk({ vim.fn.line('.'), vim.fn.line('v') }) end, { silent = true, buffer = buffer, desc = "[h]unk [r]eset selection" })
+  map('v', '<leader>hb', function() gitsigns.blame_line({ full = true }) end, { silent = true, buffer = buffer, desc = "[h]unk [b]lame selection" })
+end
 end
 
 return Maps
