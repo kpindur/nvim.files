@@ -53,17 +53,23 @@ local function config()
     dap = {},
   }
   
+  local python_path = vim.fn.expand("$NVIM_PYTHON_PROVIDER") .. "/bin/python"
+  local site_packages = vim.fn.system(python_path .. ' -c "import site; print(site.getsitepackages()[0])"'):gsub("\n", "")
+
   lspconfig.pyright.setup({
     settings = {
           python = {
               analysis = {
                   autoImportCompletions = true,
+                  extraPaths = { site_packages },
+                  useLibraryCodeForTypes = true,
               },
-	      plugins = {
-          pylint = { enabled = true, executable = "pylint" },
-          mypy = { enabled = true },
-	      },
-          }
+          plugins = {
+            pylint = { enabled = true, executable = "pylint" },
+            mypy = { enabled = true },
+          },
+          pythonPath = python_path,
+        }
       }
   })
 
