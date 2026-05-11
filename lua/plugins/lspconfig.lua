@@ -2,7 +2,6 @@ local function config()
   local cmp_nvim_lsp = require("cmp_nvim_lsp")
   local keymaps = require("config.keymaps")
   local lsp_status = require("lsp-status")
-  local lspconfig = require("lspconfig")
   local mason_lspconfig = require("mason-lspconfig")
 
   local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -31,7 +30,7 @@ local function config()
 
   vim.lsp.inlay_hint.enable(true)
 
-  lspconfig.util.default_config = vim.tbl_deep_extend("force", lspconfig.util.default_config, {
+  vim.lsp.config("*", {
     capabilities = capabilities,
   })
 
@@ -52,43 +51,60 @@ local function config()
     },
     dap = {},
   }
-  
+
   local python_path = vim.fn.expand("$NVIM_PYTHON_PROVIDER") .. "/bin/python"
   local site_packages = vim.fn.system(python_path .. ' -c "import site; print(site.getsitepackages()[0])"'):gsub("\n", "")
-
-  lspconfig.pyright.setup({
-    settings = {
-          python = {
-              analysis = {
-                  autoImportCompletions = true,
-                  extraPaths = { site_packages },
-                  useLibraryCodeForTypes = true,
-              },
-          plugins = {
-            pylint = { enabled = true, executable = "pylint" },
-            mypy = { enabled = true },
-          },
-          pythonPath = python_path,
-        }
-      }
-  })
 
   -- Dynamic server setup, so we don't have to explicitly list every single server
   -- and can just list the ones we want to override configuration for.
   -- See :help mason-lspconfig-dynamic-server-setup
-  mason_lspconfig.setup_handlers({
-    function(server)
-      -- Depend on rustaceanvim to setup `rust_analyzer`.
-      -- We're not allowed to call `setup` ourselves.
-      if server ~= "rust_analyzer" then
-        lspconfig[server].setup({})
-      end
-    end,
-    ["clangd"] = function()
-      lspconfig.clangd.setup({
-        filetypes = { "c", "cpp" }, -- we don't want objective-c and objective-cpp!
-      })
-    end,
+  mason_lspconfig.setup({
+    ensure_installed = { "hls" },
+    handlers = {
+      function(server)
+        -- Depend on rustaceanvim to setup `rust_analyzer`.
+        -- We're not allowed to call `setup` ourselves.
+        if server ~= "rust_analyzer" then
+          vim.lsp.enable(server)
+        end
+      end,
+      ["pyright"] = function()
+        vim.lsp.config("pyright", {
+          settings = {
+                python = {
+                    analysis = {
+                        autoImportCompletions = true,
+                        extraPaths = { site_packages },
+                        useLibraryCodeForTypes = true,
+                    },
+                plugins = {
+                  pylint = { enabled = true, executable = "pylint" },
+                  mypy = { enabled = true },
+                },
+                pythonPath = python_path,
+              }
+            }
+        })
+        vim.lsp.enable("pyright")
+      end,
+      ["clangd"] = function()
+        vim.lsp.config("clangd", {
+          filetypes = { "c", "cpp" },
+        })
+        vim.lsp.enable("clangd")
+      end,
+      ["hls"] = function()
+        vim.lsp.config("hls", {
+          filetypes = { "haskell", "lhaskell", "cabal" },
+          settings = {
+            haskell = {
+              formattingProvider = "ormolu"
+            }
+          }
+        })
+        vim.lsp.enable("hls")
+      end,
+    },
   })
 end
 
